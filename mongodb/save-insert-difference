@@ -1,0 +1,24 @@
+What is the difference between save and insert in Mongo DB? both looks the same
+
+db.users.save({username:"google",password:"google123"})
+
+db.users.insert({username:"google",password:"google123"})
+-----------------------------------------------------------------------------------
+Save Vs Insert :
+
+In your given examples, the behavior is essentially the same.
+
+save behaves differently if it is passed with an "_id" parameter.
+
+For save, If the document contains _id, it will upsert querying the collection on the _id field, If not, it will insert.
+
+If a document does not exist with the specified _id value, the save() method performs an insert with the specified fields in the document.
+
+If a document exists with the specified _id value, the save() method performs an update, replacing all field in the existing record with the fields from the document.
+Save vs Update :
+
+update modifies an existing document matched with your query params. If there is no such matching document, that's when upsert comes in picture.
+
+upsert : false : Nothing happens when no such document exist
+upsert : true : New doc gets created with contents equal to query params and update params
+save : Doesn't allow any query-params. if _id exists and there is a matching doc with the same _id, it replaces it. When no _id specified/no matching document, it inserts the document as a new one.
